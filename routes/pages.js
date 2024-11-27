@@ -2,7 +2,7 @@ const express=require("express");
 const router= express.Router();
 const connection=require("../db");
 
-router.get("/dashboard", (req, res) => {
+router.get("/", (req, res) => {
     const query1 = `SELECT customerName,DATE_FORMAT(transactionDate, "%a %b %d %Y") AS formattedDate,amountPending FROM customer_details WHERE amountPending > 0`;
     const query2 = `SELECT SUM(profit) AS total_profit FROM customer_details WHERE DATE(transactionDate) = CURDATE()`;
 

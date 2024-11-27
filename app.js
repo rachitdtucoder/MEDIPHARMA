@@ -1,6 +1,5 @@
 const express=require('express');
 const mysql=require('mysql2');
-const helmet = require('helmet'); // Import helmet
 const ejsMate=require('ejs-mate');
 const pagesRoute=require("./routes/pages.js");
 const path=require('path');
@@ -8,18 +7,6 @@ require('dotenv').config();
 const app=express();
 
 const port=process.env.PORT || 3000;
-
-app.use(helmet());
-app.use(
-    helmet.contentSecurityPolicy({
-      directives: {
-        defaultSrc: ["'none'"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        scriptSrc: ["'self'"],
-      },
-    })
-  );
 
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, "/public")));

@@ -8,9 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (recentTransaction) {
         const printWindow = window.open('', '', 'width=600,height=400');
 
-        // Write HTML structure to the print window
-        printWindow.document.write("<html><head><title>Transaction Print</title>");
-
         // Embedded CSS for print
         printWindow.document.write(`
             <style>

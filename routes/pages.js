@@ -137,7 +137,7 @@ router.post('/api/edit-amount', (req, res) => {
             if (err) {
                 console.error(err);
             }
-            res.redirect('/dashboard');
+            res.redirect('/');
         });
     });
 });

@@ -1,0 +1,51 @@
+<% layout("layouts/boilerplate") %>
+<body>
+    <h1 id="profitDate"></h1> <!-- Date above profit -->
+    <div id="dashboard"></div>
+    <div class="dashboard-container">
+        <div id="leftDiv">
+            <p id="todaysProfit">
+                <span class="profitLabel">Today Profit</span>
+                <span class="profitValue">&#8377;<%= totalProfit %></span>
+            </p>
+          <table id="inventoryTable">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Pending Amount</th>
+                    <th>Due From</th>
+                </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+                <% if(results1.length>0){ %>
+                   <% for(let i=0;i<results1.length;i++){ %>
+                    <tr>
+                        <td><%= results1[i].customerName %></td>
+                        <td class="red-text"><%= results1[i].amountPending %></td>
+                        <td><%= results1[i].formattedDate %></td>
+                    </tr>
+                   <% } %>
+                   <% } else { %>
+                    <tr>
+                        <td colspan="5" style="color: red;">NO PENDING AMOUNTS</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+        </div>
+        <div id="calendar"></div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          height: 'auto'
+        });
+        // Add a custom class to the calendar container
+        calendarEl.classList.add('custom-calendar-bg');
+        calendar.render();
+      });
+    </script>
+</body>

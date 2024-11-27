@@ -1,0 +1,56 @@
+<% layout("layouts/boilerplate") %>
+
+<body>
+    <div class="add-medicine">
+        <div class="ji">
+            <form method="POST" action="/api/add-medicine">
+                <input type="text" id="name" name="name" placeholder="Medicine Name" required>
+                <input type="number" id="quantity" name="quantity" placeholder="Quantity" required>                    
+                <input type="number" id="buyingprice" name="buyingprice" placeholder="Buying Price" required> 
+                <button type="submit" id="addMedicineBtn" class="btn btn-primary">Add Medicine</button>
+            </form>
+        </div>
+        <section class="inventory">
+            <div class="inventory-header">
+                <h2><b>INVENTORY</b></h2>
+                <form method="get" action="/search-med" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" name="med_name" placeholder="Search Medicine Name" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+            <table id="inventoryTable">
+                <thead>
+                    <tr>
+                        <th>Serial</th>
+                        <th>Medicine</th>
+                        <th>Quantity</th>
+                        <th>Buying Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryTableBody">
+                    <% if(medicines.length>0){ %>
+                       <% for(let i=0;i<medicines.length;i++){ %>
+                        <tr>
+                            <td><%= i+1 %></td>
+                            <td><%= medicines[i].m_name %></td>
+                            <td><%= medicines[i].quantity %></td>
+                            <td><%= medicines[i].buyingprice %></td>
+                            <td>
+                                <div class="button-container">
+                                <button class="btn btn-outline-success" data-id="<%= medicines[i].id %>">Edit</button>
+                                <button class="btn btn-outline-danger" data-id="<%= medicines[i].id %>">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                       <% } %>
+                       <% } else { %>
+                        <tr>
+                            <td colspan="5" style="color: red;">No medicines in inventory.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>

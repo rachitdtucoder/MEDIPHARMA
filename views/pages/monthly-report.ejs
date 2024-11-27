@@ -1,0 +1,23 @@
+<% layout("layouts/boilerplate") %>
+<body>
+    <table id="inventoryTable">
+        <thead>
+            <tr>
+                <th>Month, Year</th>
+                <th>Monthly Sale</th>
+                <th>Monthly Profit</th>
+            </tr>
+        </thead>
+        <tbody id="inventoryTableBody">
+            <% if(results.length>0){ %>
+               <% for(let i=0;i<results.length;i++){ %>
+                <tr>
+                    <td><%= new Date(results[i].year, results[i].month - 1).toLocaleString('default', { month: 'long' }) %> <%= results[i].year %></td>
+                    <td> &#8377;<%= (Number(results[i].monthlySale) || 0).toFixed(2) %></td>
+                    <td> &#8377;<%= (Number(results[i].monthlyProfit) || 0).toFixed(2) %></td>
+                </tr>
+               <% } %>
+            <% } %>
+        </tbody>
+    </table>
+</body>

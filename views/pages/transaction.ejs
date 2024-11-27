@@ -1,0 +1,105 @@
+<% layout("layouts/boilerplate") %>
+<body>
+    <section class="transaction-form">
+        <button type="button" id="printButton">Print</button> <!-- Print button added here -->
+        <h2><b>Add Transaction</b></h2>
+        <div class="hello">
+        <form id="transactionForm" method="POST" action="/api/add-transaction">
+            <div class="form-group">
+                <input type="text" id="customerName" name="customerName" placeholder="ENTER CUSTOMER NAME" required>
+                <input type="tel" id="mobilePhone" name="mobilePhone" placeholder="ENTER MOBILE NUMBER" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="medicineName" name="medicineName" placeholder="ENTER MEDICINE NAME" required>
+                <input type="number" id="quantity" name="quantity" placeholder="ENTER QUANTITY" required>
+                <input type="number" id="sellingPrice" name="sellingPrice" placeholder="ENTER SELLING PRICE" required>
+                <input type="number" id="amountPaid" name="amountPaid" placeholder="ENTER AMOUNT PAID" required>
+            </div>
+            <div class="hajii">
+                <input type="text" id="searchInput" placeholder=" SEARCH BY CUSTOMER NAME" onkeyup="searchCustomer()" >
+                <button type="submit" id="addTransactionBtn" class="btn btn-primary">Add Transaction</button>
+            </div>
+        </form>
+        </div>
+    </section>
+    <section class="transactions">
+        <h2><b>Transactions</b></h2>
+        <table id="transactionTable">
+            <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Date</th>
+                    <th>Customer Name</th>
+                    <th>Customer Mobile</th>
+                    <th>Medicine</th>
+                    <th>Quantity Sold</th>
+                    <th>Buying Price</th>
+                    <th>Selling Price</th>
+                    <th>Profit</th>
+                    <th>Amount Paid</th>
+                    <th>Amount Pending</th>
+                    <th>Total Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="transactionTableBody">
+                <!-- Transaction rows will be added here dynamically -->
+                <% if (customer_details.length > 0) { %>
+                    <% for(let i=0;i<customer_details.length;i++){ %>
+                        <tr>
+                            <td><%= i+1 %></td>
+                            <td><%= customer_details[i].formattedDate %></td>
+                            <td><%= customer_details[i].customerName %></td>
+                            <td><%= customer_details[i].mobilePhone %></td>
+                            <td><%= customer_details[i].medicineName %></td>
+                            <td><%= customer_details[i].quantity %></td>
+                            <td><%= customer_details[i].buyingprice %></td>
+                            <td><%= customer_details[i].sellingPrice %></td>
+                            <td><%= customer_details[i].profit %></td>
+                            <td><%= customer_details[i].amountPaid %></td>
+                            <td class="<%= customer_details[i].amountPending > 0 ? 'red-text' : '' %>">
+                                <%= customer_details[i].amountPending %>
+                            </td>
+                            <td><%= customer_details[i].totalAmount %></td>
+                            <td>
+                                <div class="button-container">
+                                <button  class="btn btn-outline-success" onclick="editAmount('<%= customer_details[i].id %>', '<%= customer_details[i].amountPending %>')" >Edit Amount Pending</button>
+                                <button class="btn btn-outline-danger" data-id="<%= customer_details[i].id %>">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }; %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="13" style="color: red;">No Record Available</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Modal -->
+    <div id="editAmountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Amount Pending</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/api/edit-amount" id="editAmountForm">
+                    <input type="hidden" id="customerId" name="customerId" />
+                    <div class="form-group">
+                        <label for="amountPending">Amount Pending</label>
+                        <input type="number" class="form-control" id="amountPending" name="amountPending" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="/js/transaction.js"></script>
+</body>

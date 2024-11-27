@@ -22,9 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/", pagesRoute);
 
-app.get("/",(req,res)=>{
-    res.send("hello");
-});
 
 
 app.listen(port,()=>{

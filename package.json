@@ -1,4 +1,7 @@
 {
+  "engines":{
+    "node": "20.15.0"
+  },
   "name": "inventory-management",
   "version": "1.0.0",
   "main": "index.js",

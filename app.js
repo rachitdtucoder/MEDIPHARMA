@@ -22,6 +22,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/", pagesRoute);
 
+app.get("/",(req,res)=>{
+    res.send("hello");
+});
+
 
 app.listen(port,()=>{
     console.log(`server started on port ${port}`);
